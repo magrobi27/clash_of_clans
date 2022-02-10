@@ -7,25 +7,32 @@ import 'package:flutter/material.dart';
 class PageHome extends StatefulWidget {
   const PageHome({Key? key}) : super(key: key);
 
+
+
   @override
   _PageHomeState createState() => _PageHomeState();
 }
 
 class _PageHomeState extends State<PageHome> {
+
+
   final myController = TextEditingController();
 
 void existe(String value)async {
   apiPlayer APIplayer =apiPlayer(token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImY1ODE4MDQ4LWNkMTctNDE4OS1iNTU4LWQwMTg2ZjdkN2Y4MSIsImlhdCI6MTY0NDM4OTgwNSwic3ViIjoiZGV2ZWxvcGVyLzMwYmY2ZDYyLTdkODktOTk0Zi1iZTExLWFjZTQwOThiZjkyYyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjguOC44LjgiXSwidHlwZSI6ImNsaWVudCJ9XX0.XfMZGQaJ0e9WEnmcxMO2d7iOUS3YHqpU1VnClnQh8xYnuuWhf-Cg0hKUKly-d6kqXzYgZfbiYEKcwUkX7LXCVQ');
-  Player? lePlay = await APIplayer.getPlayerTag("");
+  Player? lePlay = await APIplayer.getPlayerTag(text.toString());
+
 
   print('salut');
 
-  if (text != lePlay!.tag){
+  if (text != lePlay!.tag?.substring(1)){
+    print(lePlay.tag);
     print('code introuvable');
+    print(text);
   } else {
     await Navigator.push(
         context,
-        MaterialPageRoute(builder: (context)=> PageStatPlayer()));
+        MaterialPageRoute(builder: (context)=> PageStatPlayer(tagUser: text.toString())));
   }
 
 }
@@ -90,6 +97,7 @@ void existe(String value)async {
               Align(
                 child: ElevatedButton(
                   onPressed: () async {
+                    print(text);
 
                     existe(text.toString());
 

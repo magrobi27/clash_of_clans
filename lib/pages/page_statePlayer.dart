@@ -5,7 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class PageStatPlayer extends StatefulWidget {
-  const PageStatPlayer({Key? key}) : super(key: key);
+  final String tagUser;
+  const PageStatPlayer({Key? key, required this.tagUser}) : super(key: key);
 
   @override
   _PageStatPlayerState createState() => _PageStatPlayerState();
@@ -13,15 +14,43 @@ class PageStatPlayer extends StatefulWidget {
 
 class _PageStatPlayerState extends State<PageStatPlayer> {
 
-  void data() async {
-    apiPlayer APIplayer =apiPlayer(token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImY1ODE4MDQ4LWNkMTctNDE4OS1iNTU4LWQwMTg2ZjdkN2Y4MSIsImlhdCI6MTY0NDM4OTgwNSwic3ViIjoiZGV2ZWxvcGVyLzMwYmY2ZDYyLTdkODktOTk0Zi1iZTExLWFjZTQwOThiZjkyYyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjguOC44LjgiXSwidHlwZSI6ImNsaWVudCJ9XX0.XfMZGQaJ0e9WEnmcxMO2d7iOUS3YHqpU1VnClnQh8xYnuuWhf-Cg0hKUKly-d6kqXzYgZfbiYEKcwUkX7LXCVQ');
-    Player? lePlay = await APIplayer.getPlayerTag("");
+  @override
+  void initState() {
+    super.initState();
+    data();
+  }
 
+
+  String? nom;
+  int? troph;
+  int? warStar;
+  int? attaqueReussi;
+  int? defense;
+  int? dons;
+
+
+
+   void data() async {
+    apiPlayer APIplayer =apiPlayer(token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImY1ODE4MDQ4LWNkMTctNDE4OS1iNTU4LWQwMTg2ZjdkN2Y4MSIsImlhdCI6MTY0NDM4OTgwNSwic3ViIjoiZGV2ZWxvcGVyLzMwYmY2ZDYyLTdkODktOTk0Zi1iZTExLWFjZTQwOThiZjkyYyIsInNjb3BlcyI6WyJjbGFzaCJdLCJsaW1pdHMiOlt7InRpZXIiOiJkZXZlbG9wZXIvc2lsdmVyIiwidHlwZSI6InRocm90dGxpbmcifSx7ImNpZHJzIjpbIjguOC44LjgiXSwidHlwZSI6ImNsaWVudCJ9XX0.XfMZGQaJ0e9WEnmcxMO2d7iOUS3YHqpU1VnClnQh8xYnuuWhf-Cg0hKUKly-d6kqXzYgZfbiYEKcwUkX7LXCVQ');
+    Player? lePlay = await APIplayer.getPlayerTag(widget.tagUser);
+
+    setState(() {
+      nom = lePlay!.nom.toString();
+      troph = lePlay.trophee;
+      warStar = lePlay.warStar;
+      attaqueReussi = lePlay.attaqueReussi;
+      defense = lePlay.defense;
+      dons = lePlay.dons;
+
+    });
+    print('le tropheeeeeeeeeee');
+    print(troph);
 
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
 
@@ -57,9 +86,8 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                         color: Color(0xFFFFD33E),
                         size: 24,
                       ),
-                      Text(
-                        'Nom',
-                      ),
+                      Text(nom.toString()),
+
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(175, 0, 0, 0),
                         child: FaIcon(
@@ -71,7 +99,7 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                       Align(
                         alignment: AlignmentDirectional(0, 0),
                         child: Text(
-                          'Nombre trophées',
+                          troph.toString(),
                         ),
                       ),
                     ],
@@ -84,7 +112,7 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Etoile de guerre :',
+                      'Etoile de guerre : ${warStar}',
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
@@ -97,7 +125,7 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(65, 0, 0, 0),
                       child: Text(
-                        'Attaque réussie :',
+                        'Attaque réussie : ${attaqueReussi}',
                       ),
                     ),
                     Padding(
@@ -117,7 +145,7 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'Défense :',
+                      'Défense : ${defense}',
                     ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
@@ -130,7 +158,7 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(160, 0, 0, 0),
                       child: Text(
-                        'Dons :',
+                        'Dons : ${dons}',
 
                       ),
                     ),
@@ -142,6 +170,7 @@ class _PageStatPlayerState extends State<PageStatPlayer> {
                         size: 24,
                       ),
                     ),
+
                   ],
                 ),
               ),
